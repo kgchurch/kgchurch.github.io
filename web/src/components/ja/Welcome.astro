@@ -1,0 +1,135 @@
+---
+import astroLogo from '../../assets/astro.svg';
+import background from '../../assets/background.svg';
+import "../../styles/global.css";
+---
+
+<style>
+  #container {
+    background-image: url(../../assets/background.svg);
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+  }
+  section {
+    margin-bottom: 2rem; /* 기존 4rem(mb-16)의 50% */
+  }
+</style>
+
+
+<div class="min-h-screen bg-gray-100">
+  <!-- 메인 컨텐츠 섹션 -->
+  <main class="container mx-auto px-4 py-8">
+
+    <!-- 교회소개 -->
+    <section class="mb-16">
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">教会紹介</h2>
+        <div class="prose max-w-none">
+          <p class="text-gray-600 mb-4">
+            柏栄光教会は2023年4月30日に設立された千葉県柏市に位置する韓国系教会です。
+            私たちは神様の栄光のために礼拝を捧げ、福音を伝え、互いに愛し合い仕え合うコミュニティを目指しています。
+          </p>
+          <div class="mt-4">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">教会ビジョン</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-2">
+              <li>神様を栄光にする礼拝共同体</li>
+              <li>御言葉で育てる教育共同体</li>
+              <li>愛で仕える宣教共同体</li>
+            </ul>
+          </div>
+
+          <div class="mt-4">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">兄弟教会</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-2">
+              <li>中央栄光教会</li>
+              <li>横浜栄光教会</li>
+              <li>千葉栄光教会</li>
+              <li>八王子栄光教会</li>
+              <li>松戸栄光教会</li>
+              <li>川口栄光教会</li>
+              <li>富士栄光教会</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+	<!-- 최근 메시지 -->
+	<section class="mb-16">
+      <div class="bg-white p-6 rounded-lg shadow-md w-full">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">最新メッセージ</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="aspect-w-16 aspect-h-9">
+		  	<iframe width="100%" height="315" src="https://www.youtube.com/embed/9QSHmaHiUis?si=eeP4kwk5OKbiMXDi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <div class="aspect-w-16 aspect-h-9">
+			<iframe width="100%" height="315" src="https://www.youtube.com/embed/CawCHq4FA6s?si=NBZ1QXXDK5qJedaY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+        <div class="space-y-2 mt-4">
+          <p class="text-gray-600">YouTubeチャンネルでより多くのメッセージをご覧いただけます。</p>
+          <a href="https://www.youtube.com/@柏栄光教会" class="text-blue-600 hover:text-blue-800">もっと見る →</a>
+        </div>
+      </div>
+	</section>
+
+	<!-- 예배시간 -->
+	<section class="mb-16">
+      <div class="bg-white p-6 rounded-lg shadow-md w-full">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">礼拝時間</h2>
+        <div class="space-y-2">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead>
+              <tr>
+                <th class="w-[25%] px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">時間</th>
+                <th class="w-[75%] px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">礼拝</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <tr class="hover:bg-gray-50">
+                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">主日 10:00</td>
+                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">日本語礼拝</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">主日 10:30</td>
+                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">教会学校礼拝</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">主日 12:00 (正午)</td>
+                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">韓国語礼拝 (日本語通訳あり)</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">水曜日 13:00</td>
+                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">水曜礼拝 (韓国語)</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">金曜日 20:30</td>
+                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">金曜聖霊集会 (韓国語)</td>
+              </tr>
+              <tr class="hover:bg-gray-50">
+                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">月曜日 ~ 金曜日 6:00</td>
+                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">早天祈り会</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+	</section>
+
+	<!-- 오시는 길 -->
+	<section class="mb-16">
+      <div class="bg-white p-6 rounded-lg shadow-md w-full">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">アクセス</h2>
+        <div class="space-y-4">
+          <p class="text-gray-600">住所: 〒277-0005 千葉県柏市柏７丁目５−５７ソフィアビル３F</p>
+          <div class="w-full h-[450px]">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3233.4385401182462!2d139.97571977657879!3d35.86276857252917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60189d65a5005f4b%3A0x1b482973c4f68ae9!2z7Lm07Iuc7JmA7JiB6rSR6rWQ7ZqMKOafj-aghOWFieaVmeS8mik!5e0!3m2!1sko!2sjp!4v1738153543995!5m2!1sko!2sjp" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>

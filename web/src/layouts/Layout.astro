@@ -1,11 +1,21 @@
+---
+import SEO_ko from '../components/ko/SEO.astro';
+import SEO_ja from '../components/ja/SEO.astro';
+
+var SEO;
+if (Astro.currentLocale == "ja") {
+	SEO = SEO_ja;
+} else {
+	SEO = SEO_ko;
+}
+---
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Kashiwa Gloria Church</title>
+		<SEO />
 	</head>
 	<body>
 		<slot />

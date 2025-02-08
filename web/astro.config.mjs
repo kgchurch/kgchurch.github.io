@@ -7,6 +7,14 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: "https://kgchurch.github.io",
   base: "/",
+  i18n: {
+    locales: ["en", "ko", "ja"],
+    defaultLocale: "ko",
+    routing: {
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: true
+    }
+  },
   vite: {
     plugins: [tailwindcss()]
   }

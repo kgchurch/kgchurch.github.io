@@ -1,12 +1,12 @@
 ---
-import astroLogo from '../assets/astro.svg';
-import background from '../assets/background.svg';
-import "../styles/global.css";
+import astroLogo from '../../assets/astro.svg';
+import background from '../../assets/background.svg';
+import "../../styles/global.css";
 ---
 
 <style>
   #container {
-    background-image: url(../assets/background.svg);
+    background-image: url(../../assets/background.svg);
     background-size: cover;
     background-position: center;
     min-height: 100vh;
@@ -16,17 +16,10 @@ import "../styles/global.css";
   }
 </style>
 
+
 <div class="min-h-screen bg-gray-100">
   <!-- 메인 컨텐츠 섹션 -->
   <main class="container mx-auto px-4 py-8">
-    <!-- 히어로 섹션 -->
-    <section class="text-center mb-16">
-      <div class="max-w-4xl mx-auto">
-        <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
-          카시와 영광교회
-        </h1>
-      </div>
-    </section>
 
     <!-- 교회소개 -->
     <section class="mb-16">
@@ -34,10 +27,8 @@ import "../styles/global.css";
         <h2 class="text-xl font-bold text-gray-800 mb-4">교회 소개</h2>
         <div class="prose max-w-none">
           <p class="text-gray-600 mb-4">
-            카시와 영광교회는 2023년 4월 29일에 설립된
-			일본 치바현 카시와시에 위치한 한인교회입니다.
-            우리는 하나님의 영광을 위해 예배하며, 복음을 전하고, 
-            서로 사랑하며 섬기는 공동체가 되고자 합니다.
+            카시와 영광교회는 2023년 4월 30일에 설립된 일본 치바현 카시와시에 위치한 한인교회입니다.
+            우리는 하나님의 영광을 위해 예배하며, 복음을 전하고, 서로 사랑하며 섬기는 공동체가 되고자 합니다.
           </p>
           <div class="mt-4">
             <h3 class="text-lg font-semibold text-gray-800 mb-2">교회 비전</h3>
@@ -45,6 +36,19 @@ import "../styles/global.css";
               <li>하나님을 영화롭게 하는 예배 공동체</li>
               <li>말씀으로 양육하는 교육 공동체</li>
               <li>사랑으로 섬기는 선교 공동체</li>
+            </ul>
+          </div>
+
+          <div class="mt-4">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">형제교회</h3>
+            <ul class="list-disc list-inside text-gray-600 space-y-2">
+              <li>중앙영광교회</li>
+              <li>요코하마영광교회</li>
+              <li>치바영광교회</li>
+              <li>하찌오지영광교회</li>
+              <li>마츠도영광교회</li>
+              <li>가와구찌영광교회</li>
+              <li>후지영광교회</li>
             </ul>
           </div>
         </div>

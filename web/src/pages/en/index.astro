@@ -1,6 +1,9 @@
 ---
+import { getRelativeLocaleUrl } from 'astro:i18n';
 import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
+
+const aboutURL = getRelativeLocaleUrl("ja", "about");
 ---
 
 <Layout>

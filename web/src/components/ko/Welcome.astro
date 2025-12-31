@@ -1,138 +1,150 @@
 ---
-import astroLogo from '../../assets/astro.svg';
-import background from '../../assets/background.svg';
-import "../../styles/global.css";
-
-import SermonVideoKorean from '../_SermonVideoKorean.astro';
-import SermonVideoJapanese from '../_SermonVideoJapanese.astro';
+import SermonVideo from './_SermonVideoKorean.astro';
 ---
-
-<style>
-  #container {
-    background-image: url(../../assets/background.svg);
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
-  }
-  section {
-    margin-bottom: 2rem; /* 기존 4rem(mb-16)의 50% */
-  }
-</style>
-
-
-<div class="min-h-screen bg-gray-100">
-  <!-- 메인 컨텐츠 섹션 -->
-  <main class="container mx-auto px-4 py-8">
-
-    <!-- 교회소개 -->
-    <section class="mb-16">
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">교회 소개</h2>
-        <div class="prose max-w-none">
-          <p class="text-gray-600 mb-4">
-            카시와 영광교회는 2023년 4월 30일에 설립된 일본 치바현 카시와시에 위치한 한인교회입니다.
-            우리는 하나님의 영광을 위해 예배하며, 복음을 전하고, 서로 사랑하며 섬기는 공동체가 되고자 합니다.
+<div class="carousel w-full h-[30vh]">
+  <div id="slide1" class="carousel-item relative w-full">
+    <div class="hero bg-primary/20">
+      <div class="hero-content flex-col lg:flex-row">
+        <div class="text-center lg:text-left w-2/3">
+          <h1 class="text-3xl font-bold">하나님을 영화롭게 하는 예배 공동체</h1>
+          <p class="py-6">
+            우리는 영과 진리로 드리는 예배를 통해 하나님을 깊이 만나고, 삶의 모든 자리에서 그분의 영광을 드러내기를 소망합니다.
+            십자가 사랑으로 서로를 섬기며 세상에 빛과 소금이 되는 거룩한 공동체입니다.
           </p>
-          <div class="mt-4">
-            <h3 class="text-lg font-semibold text-gray-800 mb-2">교회 비전</h3>
-            <ul class="list-disc list-inside text-gray-600 space-y-2">
-              <li>하나님을 영화롭게 하는 예배 공동체</li>
-              <li>말씀으로 양육하는 교육 공동체</li>
-              <li>사랑으로 섬기는 선교 공동체</li>
-            </ul>
-          </div>
-
-          <div class="mt-4">
-            <h3 class="text-lg font-semibold text-gray-800 mb-2">형제교회</h3>
-            <ul class="list-disc list-inside text-gray-600 space-y-2">
-              <li>중앙영광교회</li>
-              <li>요코하마영광교회</li>
-              <li>치바영광교회</li>
-              <li>하찌오지영광교회</li>
-              <li>마츠도영광교회</li>
-              <li>가와구찌영광교회</li>
-              <li>후지영광교회</li>
-            </ul>
-          </div>
         </div>
       </div>
-    </section>
+    </div>
+    <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide3">❮</button>
+      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide2">❯</button>
+    </div>
+  </div>
 
-	<!-- 최근 메시지 -->
-	<section class="mb-16">
-      <div class="bg-white p-6 rounded-lg shadow-md w-full">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">최근 메시지</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="aspect-w-16 aspect-h-9">
-            <SermonVideoKorean />
-          </div>
-          <div class="aspect-w-16 aspect-h-9">
-            <SermonVideoJapanese />
-          </div>
-        </div>
-        <div class="space-y-2 mt-4">
-          <p class="text-gray-600">YouTube 채널에서 더 많은 메시지를 확인하실 수 있습니다.</p>
-          <a href="https://www.youtube.com/@柏栄光教会" class="text-blue-600 hover:text-blue-800">더 보기 →</a>
-        </div>
-      </div>
-	</section>
-
-	<!-- 예배시간 -->
-	<section class="mb-16">
-      <div class="bg-white p-6 rounded-lg shadow-md w-full">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">예배시간</h2>
-        <div class="space-y-2">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead>
-              <tr>
-                <th class="w-[25%] px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">시간</th>
-                <th class="w-[75%] px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">예배</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              <tr class="hover:bg-gray-50">
-                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">주일 10:00</td>
-                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">일본어 예배</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">주일 10:30</td>
-                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">교회학교 예배</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">주일 12:00 (정오)</td>
-                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">한국어 예배</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">수요일 13:00</td>
-                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">수요 예배 (한국어)</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">금요일 20:30</td>
-                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">금요 성령집회 (한국어)</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">월요일 ~ 금요일 6:00</td>
-                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">새벽 예배</td>
-              </tr>
-            </tbody>
-          </table>
-
+  <div id="slide2" class="carousel-item relative w-full">
+    <div class="hero bg-primary/20">
+      <div class="hero-content flex-col lg:flex-row">
+        <div class="text-center lg:text-left w-2/3">
+          <h1 class="text-3xl font-bold">말씀으로 양육하는 교육 공동체</h1>
+          <p class="py-6">
+            매일 말씀을 묵상하고 삶에 적용하여 영적 성숙을 이루어갑니다.
+            체계적인 양육과 훈련을 통해 성도들을 온전한 그리스도인으로 세우며,
+            세상 속에서 빛과 소금의 역할을 감당하는 리더를 길러내는 교육 공동체입니다.
+          </p>
         </div>
       </div>
-	</section>
+    </div>
+    <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide1">❮</button>
+      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide3">❯</button>
+    </div>
+  </div>
 
-	<!-- 오시는 길 -->
-	<section class="mb-16">
-      <div class="bg-white p-6 rounded-lg shadow-md w-full">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">오시는 길</h2>
-        <div class="space-y-4">
-          <p class="text-gray-600">주소: 〒277-0005 千葉県柏市柏７丁目５−５７ソフィアビル３F</p>
-          <div class="w-full h-[450px]">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3233.4385401182462!2d139.97571977657879!3d35.86276857252917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60189d65a5005f4b%3A0x1b482973c4f68ae9!2z7Lm07Iuc7JmA7JiB6rSR6rWQ7ZqMKOafj-aghOWFieaVmeS8mik!5e0!3m2!1sko!2sjp!4v1738153543995!5m2!1sko!2sjp" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
+  <div id="slide3" class="carousel-item relative w-full">
+    <div class="hero bg-primary/20">
+      <div class="hero-content flex-col lg:flex-row">
+        <div class="text-center lg:text-left w-2/3">
+          <h1 class="text-3xl font-bold">사랑으로 섬기는 선교 공동체</h1>
+          <p class="py-6">
+            그리스도의 사랑을 품고 이웃을 섬기며, 복음의 기쁜 소식을 땅 끝까지 전하는 사명에 헌신합니다.
+            지역 사회를 넘어 열방을 향해 나아가며, 하나님의 사랑이 필요한 곳마다 생명의 빛을 비추는 선교 공동체입니다.
+          </p>
         </div>
       </div>
-    </section>
-
-  </main>
+    </div>
+    <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide2">❮</button>
+      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide1">❯</button>
+    </div>
+  </div>
 </div>
+
+<script>
+  const slides = ['slide1', 'slide2', 'slide3'];
+  let currentIndex = 0;
+
+  // Function to smooth scroll to a slide
+  function scrollToSlide(slideId) {
+    const element = document.getElementById(slideId);
+    if (element) {
+      const container = element.parentElement;
+      if (container) {
+        container.scrollTo({
+          left: element.offsetLeft,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }
+
+  // Auto-slide functionality (currently commented out but logic updated for reference)
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    scrollToSlide(slides[currentIndex]);
+  }, 10000);
+
+
+  // Add click event listeners to navigation buttons
+  document.addEventListener('DOMContentLoaded', () => {
+    const navButtons = document.querySelectorAll('.carousel-nav');
+    navButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        const targetId = (e.currentTarget as HTMLElement).dataset.target;
+        if (targetId) {
+          scrollToSlide(targetId);
+          // Optional: Update currentIndex if auto-slide is re-enabled
+          // currentIndex = slides.indexOf(targetId);
+        }
+      });
+    });
+  });
+</script>
+
+
+<!-- Sermon -->
+<section class="py-5 bg-base-100">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col gap-12 max-w-3xl mx-auto text-left">
+      <div class="flex justify-center flex-col items-center gap-4">
+        <SermonVideo />
+        <a href="https://www.youtube.com/@柏栄光教会/videos" target="_blank" class="link link-primary">유튜브에서 설교 영상 더 보기</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Introduction -->
+<section class="py-5 bg-base-100">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col gap-12 max-w-3xl mx-auto text-left">
+      
+      <div>
+        <h2 class="text-2xl font-bold mb-4 text-primary">카시와영광교회</h2>
+        <p class="text-gray-600 leading-relaxed">
+          카시와영광교회는 2023년 4월 30일에 설립된 일본 치바현 카시와시에 위치한 <span class="font-bold text-gray-900">감리교단</span>에 속한 한인교회입니다.
+          <br/>
+          우리는 하나님의 영광을 위해 예배하며, 복음을 전하고, 서로 사랑하며 섬기는 공동체가 되고자 합니다.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- With Jesus -->
+<section class="py-5 bg-base-100">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col gap-12 max-w-3xl mx-auto text-left">
+      <div>
+        <h2 class="text-2xl font-bold mb-4 text-primary">예수동행훈련</h2>
+        <p class="text-gray-600 leading-relaxed">
+          예수동행일기는 예수님과 동행하는 삶을 훈련하는 가장 탁월한 도구입니다.
+          <br/>
+          예수동행일기의 초점은 일기 쓰기가 아니라, 오직 하나 
+          <span class="font-bold text-gray-900">"예수님과 친밀한 동행"</span>입니다.
+        </p>
+        <a href="https://wjm.kr/with-jesus-journal/" target="_blank" class="btn btn-outline btn-primary btn-sm mt-4">자세히 알아보기</a>
+        
+      </div>
+    </div>
+  </div>
+</section>

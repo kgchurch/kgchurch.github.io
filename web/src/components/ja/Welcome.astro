@@ -1,138 +1,147 @@
 ---
-import astroLogo from '../../assets/astro.svg';
-import background from '../../assets/background.svg';
-import "../../styles/global.css";
-
-import SermonVideoKorean from '../_SermonVideoKorean.astro';
-import SermonVideoJapanese from '../_SermonVideoJapanese.astro';
+import SermonVideo from '~/components/ja/_SermonVideoJapanese.astro';
 ---
-
-<style>
-  #container {
-    background-image: url(../../assets/background.svg);
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
-  }
-  section {
-    margin-bottom: 2rem; /* 기존 4rem(mb-16)의 50% */
-  }
-</style>
-
-
-<div class="min-h-screen bg-gray-100">
-  <!-- 메인 컨텐츠 섹션 -->
-  <main class="container mx-auto px-4 py-8">
-
-    <!-- 교회소개 -->
-    <section class="mb-16">
-      <div class="bg-white p-6 rounded-lg shadow-md">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">教会紹介</h2>
-        <div class="prose max-w-none">
-          <p class="text-gray-600 mb-4">
-            柏栄光教会は2023年4月30日に設立された千葉県柏市に位置する韓国系教会です。
-            私たちは神様の栄光のために礼拝を捧げ、福音を伝え、互いに愛し合い仕え合うコミュニティを目指しています。
+<div class="carousel w-full h-[30vh]">
+  <div id="slide1" class="carousel-item relative w-full">
+    <div class="hero bg-primary/20">
+      <div class="hero-content flex-col lg:flex-row">
+        <div class="text-center lg:text-left w-2/3">
+          <h1 class="text-3xl font-bold">神の栄光を現す礼拝共同体</h1>
+          <p class="py-6">
+            私たちは、霊と真理による礼拝を通して神様と深く出会い、人生のあらゆる場でその栄光を現すことを願っています。 
+            十字架の愛によって互いに仕え、この世の光と塩となる聖なる共同体です。
           </p>
-          <div class="mt-4">
-            <h3 class="text-lg font-semibold text-gray-800 mb-2">教会ビジョン</h3>
-            <ul class="list-disc list-inside text-gray-600 space-y-2">
-              <li>神様を栄光にする礼拝共同体</li>
-              <li>御言葉で育てる教育共同体</li>
-              <li>愛で仕える宣教共同体</li>
-            </ul>
-          </div>
-
-          <div class="mt-4">
-            <h3 class="text-lg font-semibold text-gray-800 mb-2">兄弟教会</h3>
-            <ul class="list-disc list-inside text-gray-600 space-y-2">
-              <li>中央栄光教会</li>
-              <li>横浜栄光教会</li>
-              <li>千葉栄光教会</li>
-              <li>八王子栄光教会</li>
-              <li>松戸栄光教会</li>
-              <li>川口栄光教会</li>
-              <li>富士栄光教会</li>
-            </ul>
-          </div>
         </div>
       </div>
-    </section>
+    </div>
+    <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide3">❮</button>
+      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide2">❯</button>
+    </div>
+  </div>
 
-	<!-- 최근 메시지 -->
-	<section class="mb-16">
-      <div class="bg-white p-6 rounded-lg shadow-md w-full">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">最新メッセージ</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="aspect-w-16 aspect-h-9">
-            <SermonVideoKorean />
-          </div>
-          <div class="aspect-w-16 aspect-h-9">
-            <SermonVideoJapanese />
-          </div>
-        </div>
-        <div class="space-y-2 mt-4">
-          <p class="text-gray-600">YouTubeチャンネルでより多くのメッセージをご覧いただけます。</p>
-          <a href="https://www.youtube.com/@柏栄光教会" class="text-blue-600 hover:text-blue-800">もっと見る →</a>
-        </div>
-      </div>
-	</section>
-
-	<!-- 예배시간 -->
-	<section class="mb-16">
-      <div class="bg-white p-6 rounded-lg shadow-md w-full">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">礼拝時間</h2>
-        <div class="space-y-2">
-          <table class="min-w-full divide-y divide-gray-200">
-            <thead>
-              <tr>
-                <th class="w-[25%] px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">時間</th>
-                <th class="w-[75%] px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">礼拝</th>
-              </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-              <tr class="hover:bg-gray-50">
-                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">主日 10:00</td>
-                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">日本語礼拝</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">主日 10:30</td>
-                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">教会学校礼拝</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">主日 12:00 (正午)</td>
-                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">韓国語礼拝 (日本語通訳あり)</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">水曜日 13:00</td>
-                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">水曜礼拝 (韓国語)</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">金曜日 20:30</td>
-                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">金曜聖霊集会 (韓国語)</td>
-              </tr>
-              <tr class="hover:bg-gray-50">
-                <td class="w-[25%] px-6 py-4 whitespace-nowrap text-sm text-gray-500">月曜日 ~ 金曜日 6:00</td>
-                <td class="w-[75%] px-6 py-4 whitespace-nowrap text-sm text-gray-900">早天祈り会</td>
-              </tr>
-            </tbody>
-          </table>
-
+  <div id="slide2" class="carousel-item relative w-full">
+    <div class="hero bg-primary/20">
+      <div class="hero-content flex-col lg:flex-row">
+        <div class="text-center lg:text-left w-2/3">
+          <h1 class="text-3xl font-bold">御言葉によって育てる教育共同体</h1>
+          <p class="py-6">
+            私たちは、毎日みことばを黙想し、生活に適用することで霊的な成熟を目指しています。
+            体系的な養育と訓練を通して、信徒を成熟したキリスト者として育て、
+            世の中で光と塩の役割を果たすリーダーを育成する教育共同体です。
+          </p>
         </div>
       </div>
-	</section>
+    </div>
+    <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide1">❮</button>
+      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide3">❯</button>
+    </div>
+  </div>
 
-	<!-- 오시는 길 -->
-	<section class="mb-16">
-      <div class="bg-white p-6 rounded-lg shadow-md w-full">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">アクセス</h2>
-        <div class="space-y-4">
-          <p class="text-gray-600">住所: 〒277-0005 千葉県柏市柏７丁目５−５７ソフィアビル３F</p>
-          <div class="w-full h-[450px]">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3233.4385401182462!2d139.97571977657879!3d35.86276857252917!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60189d65a5005f4b%3A0x1b482973c4f68ae9!2z7Lm07Iuc7JmA7JiB6rSR6rWQ7ZqMKOafj-aghOWFieaVmeS8mik!5e0!3m2!1sko!2sjp!4v1738153543995!5m2!1sko!2sjp" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
+  <div id="slide3" class="carousel-item relative w-full">
+    <div class="hero bg-primary/20">
+      <div class="hero-content flex-col lg:flex-row">
+        <div class="text-center lg:text-left w-2/3">
+          <h1 class="text-3xl font-bold">愛をもって仕える宣教共同体</h1>
+          <p class="py-6">
+            私たちは、キリストの愛を心に抱き、隣人に仕えるとともに、福音の喜びの知らせを地の果てまで伝える使命に献身しています。
+            地域社会を超えて諸国の民へと歩み出し、神の愛を必要とするすべての場所にいのちの光を照らす宣教共同体です。
+          </p>
         </div>
       </div>
-    </section>
-
-  </main>
+    </div>
+    <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide2">❮</button>
+      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide1">❯</button>
+    </div>
+  </div>
 </div>
+
+<script>
+  const slides = ['slide1', 'slide2', 'slide3'];
+  let currentIndex = 0;
+
+  // Function to smooth scroll to a slide
+  function scrollToSlide(slideId) {
+    const element = document.getElementById(slideId);
+    if (element) {
+      const container = element.parentElement;
+      if (container) {
+        container.scrollTo({
+          left: element.offsetLeft,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }
+
+  // Auto-slide functionality (currently commented out but logic updated for reference)
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % slides.length;
+    scrollToSlide(slides[currentIndex]);
+  }, 10000);
+
+
+  // Add click event listeners to navigation buttons
+  document.addEventListener('DOMContentLoaded', () => {
+    const navButtons = document.querySelectorAll('.carousel-nav');
+    navButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        const targetId = (e.currentTarget as HTMLElement).dataset.target;
+        if (targetId) {
+          scrollToSlide(targetId);
+          // Optional: Update currentIndex if auto-slide is re-enabled
+          // currentIndex = slides.indexOf(targetId);
+        }
+      });
+    });
+  });
+</script>
+
+
+<!-- Sermon -->
+<section class="py-5 bg-base-100">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col gap-12 max-w-3xl mx-auto text-left">
+      <div class="flex justify-center flex-col items-center gap-4">
+        <SermonVideo />
+        <a href="https://www.youtube.com/@柏栄光教会/videos" target="_blank" class="link link-primary">YouTubeで説教動画をもっと見る</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Introduction -->
+<section class="py-5 bg-base-100">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col gap-12 max-w-3xl mx-auto text-left">
+      
+      <div>
+        <h2 class="text-2xl font-bold mb-4 text-primary">柏栄光教会</h2>
+        <p class="text-gray-600 leading-relaxed">
+          柏栄光教会は2023年4月30日に設立された日本の千種県柏栄市に位置する<span class="font-bold text-gray-900">監理教会団</span>所属の韓国教会です。
+          <br/>
+          私たちは神様の栄光のために礼拝を捧げ、福音を伝え、互いに愛し合い仕え合うコミュニティを目指しています。
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- With Jesus -->
+<section class="py-5 bg-base-100">
+  <div class="container mx-auto px-6">
+    <div class="flex flex-col gap-12 max-w-3xl mx-auto text-left">
+      <div>
+        <h2 class="text-2xl font-bold mb-4 text-primary">イエス同行訓練</h2>
+        <p class="text-gray-600 leading-relaxed">
+          イエス同行日記は、イエス様と共に歩む人生を訓練するための最も優れた道具です。
+          <br/>
+          イエス同行日記の焦点は日記を書くこと自体ではなく、ただ一つ、<span class="font-bold text-gray-900">イエス様との親しい交わり</span>にあります。
+        </p>
+        <a href="https://wjm.kr/with-jesus-journal/" target="_blank" class="btn btn-outline btn-primary btn-sm mt-4">詳しく見る</a>
+      </div>
+    </div>
+  </div>
+</section>

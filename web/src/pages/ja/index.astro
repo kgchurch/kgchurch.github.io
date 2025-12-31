@@ -1,10 +1,16 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Navigation from '../../components/ja/Navigation.astro';
-import Welcome from '../../components/ja/Welcome.astro';
+import { SEO } from "astro-seo";
+
+import Layout from '~/layouts/Layout.astro';
+import Welcome from '~/components/ja/Welcome.astro';
 ---
 
 <Layout>
-	<Navigation />
-	<Welcome />
+	<main class="space-y-10 mb-10">
+		<SEO
+			title="柏栄光教会"
+			description="柏栄光教会 柏にある教会 神様の栄光のために礼拝を捧げ、福音を伝え、互いに愛し合い仕え合う共同体"
+		/>
+		<Welcome />
+	</main>
 </Layout>

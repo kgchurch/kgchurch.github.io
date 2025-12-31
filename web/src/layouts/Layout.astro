@@ -1,34 +1,28 @@
 ---
-import GA from '../components/GA.astro';
-import SEO_ko from '../components/ko/SEO.astro';
-import SEO_ja from '../components/ja/SEO.astro';
+import "~/styles/global.css";
+import GA from '~/components/GA.astro';
 
-var SEO;
-if (Astro.currentLocale == "ja") {
-	SEO = SEO_ja;
-} else {
-	SEO = SEO_ko;
-}
+import AppHeaderJa from '~/components/ja/AppHeader.astro';
+import AppHeaderKo from '~/components/ko/AppHeader.astro';
+import AppFooterJa from '~/components/ja/AppFooter.astro';
+import AppFooterKo from '~/components/ko/AppFooter.astro';
+
+const isJa = Astro.currentLocale === "ja";
+const AppHeader = isJa ? AppHeaderJa : AppHeaderKo;
+const AppFooter = isJa ? AppFooterJa : AppFooterKo;
+const lang = Astro.currentLocale || "ko";
 ---
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<SEO />
 		<GA />
 	</head>
-	<body>
+	<body class="bg-white min-h-screen flex flex-col">
+		<AppHeader />
 		<slot />
+		<AppFooter />
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

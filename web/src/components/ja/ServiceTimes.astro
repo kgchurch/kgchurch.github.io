@@ -1,81 +1,57 @@
+---
+const tables = [
+  {
+    heading: "主日礼拝時間",
+    rows: [
+      { time: "主日 10:00", name: "第１礼拝", lang: "日本語", interp: "なし" },
+      { time: "主日 12:00(正午)", name: "第２礼拝", lang: "韓国語", interp: "日本語" },
+      { time: "主日 10:30", name: "教会学校", lang: "韓国語 または 日本語", interp: "なし" },
+    ],
+  },
+  {
+    heading: "礼拝時間",
+    rows: [
+      { time: "月 ~ 金曜日 06:00", name: "早天祈り会", lang: "韓国語", interp: "なし" },
+      { time: "水曜日 13:00", name: "水曜礼拝", lang: "韓国語", interp: "日本語" },
+      { time: "金曜日 20:30", name: "金曜聖霊集会", lang: "韓国語", interp: "なし" },
+    ],
+  },
+];
+---
 
-<section class="py-10 bg-base-100">
-  <div class="container mx-auto px-6">
-    <div class="max-w-3xl mx-auto">
-      <h2 class="text-2xl font-bold mb-8 text-primary">主日礼拝時間</h2>
-      <div class="overflow-x-auto">
-        <table class="table w-full">
-          <thead>
-            <tr>
-              <th class="text-lg">時間</th>
-              <th class="text-lg">礼拝</th>
-              <td class="text-lg">言語</td>
-              <td class="text-lg">通訳</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>主日 10:00</th>
-              <td>第１礼拝</td>
-              <td>日本語</td>
-              <td>なし</td>
-            </tr>
-            <tr>
-              <th>主日 12:00(正午)</th>
-              <td>第２礼拝</td>
-              <td>韓国語</td>
-              <td>日本語</td>
-            </tr>
-             <tr>
-               <th>主日 10:30</th>
-               <td>教会学校</td>
-               <td>韓国語 または 日本語</td>
-               <td>なし</td>
-             </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+<section class="mx-auto max-w-4xl px-5 py-16 md:px-10 md:py-24">
+  <div class="mb-12 text-center">
+    <p class="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-secondary">Service Times</p>
+    <h1 class="text-3xl font-semibold tracking-tight md:text-4xl">礼拝のご案内</h1>
   </div>
-</section>
 
-
-<section class="py-10 bg-base-100">
-  <div class="container mx-auto px-6">
-    <div class="max-w-3xl mx-auto">
-      <h2 class="text-2xl font-bold mb-8 text-primary">礼拝時間</h2>
-      <div class="overflow-x-auto">
-        <table class="table w-full">
-          <thead>
-            <tr>
-              <th class="text-lg">時間</th>
-              <th class="text-lg">礼拝</th>
-              <th class="text-lg">言語</th>
-              <th class="text-lg">通訳</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>月 ~ 金曜日 06:00</th>
-              <td>早天祈り会</td>
-              <td>韓国語</td>
-              <td>なし</td>
-            </tr>
-            <tr>
-              <th>水曜日 13:00</th>
-              <td>水曜礼拝</td>
-              <td>韓国語</td>
-              <td>日本語</td>
-            </tr>
-             <tr>
-               <th>金曜日 20:30</th>
-               <td>金曜聖霊集会</td>
-               <td>韓国語</td>
-               <td>なし</td>
-             </tr>
-          </tbody>
-        </table>
+  <div class="space-y-12">
+    {tables.map((t) => (
+      <div>
+        <h2 class="mb-4 text-xl font-semibold text-primary md:text-2xl">{t.heading}</h2>
+        <div class="overflow-x-auto rounded-2xl border border-base-300">
+          <table class="table">
+            <thead class="bg-base-200 text-base-content/70">
+              <tr>
+                <th class="text-sm font-semibold">時間</th>
+                <th class="text-sm font-semibold">礼拝</th>
+                <th class="text-sm font-semibold">言語</th>
+                <th class="text-sm font-semibold">通訳</th>
+              </tr>
+            </thead>
+            <tbody>
+              {t.rows.map((r) => (
+                <tr class="hover:bg-base-200/50">
+                  <th class="whitespace-nowrap font-semibold text-primary">{r.time}</th>
+                  <td>{r.name}</td>
+                  <td>{r.lang}</td>
+                  <td>{r.interp}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
+    ))}
   </div>
 </section>

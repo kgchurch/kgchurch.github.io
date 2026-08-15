@@ -1,5 +1,82 @@
 @import "tailwindcss";
 
+/* daisyUI 5 — disable built-in themes, register our own as default */
 @plugin "daisyui" {
-    themes: emerald --default;
+  themes: false;
+}
+
+@plugin "daisyui/theme" {
+  name: "kgchurch";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+
+  /* Surfaces — warm ivory */
+  --color-base-100: oklch(98.2% 0.004 95);   /* page / cards */
+  --color-base-200: oklch(95.8% 0.008 92);   /* warm panel */
+  --color-base-300: oklch(91.5% 0.012 90);   /* hairlines / borders */
+  --color-base-content: oklch(27% 0.006 270); /* ink text */
+
+  /* Primary — deep slate navy */
+  --color-primary: oklch(41% 0.05 245);
+  --color-primary-content: oklch(99% 0 0);
+
+  /* Secondary & accent — muted gold */
+  --color-secondary: oklch(66% 0.07 75);
+  --color-secondary-content: oklch(22% 0.02 60);
+  --color-accent: oklch(66% 0.07 75);
+  --color-accent-content: oklch(22% 0.02 60);
+
+  /* Neutral — dark footer */
+  --color-neutral: oklch(24% 0.006 270);
+  --color-neutral-content: oklch(85% 0.004 270);
+
+  /* Status */
+  --color-info: oklch(60% 0.08 245);
+  --color-success: oklch(60% 0.09 150);
+  --color-warning: oklch(75% 0.12 80);
+  --color-error: oklch(60% 0.13 25);
+
+  /* Shape */
+  --radius-selector: 0.75rem;
+  --radius-field: 0.625rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+/* Type — Pretendard (SIL OFL 1.1) for everything: ko/ja/en 모두 지원 */
+@theme {
+  --font-sans: "Pretendard", "Pretendard JP", system-ui, -apple-system, "Hiragino Sans",
+    "Noto Sans JP", sans-serif;
+}
+
+@layer base {
+  html,
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  /* 한국어는 어절 단위로만 개행 (단어 중간 끊김 방지).
+     일본어는 띄어쓰기가 없어 keep-all 을 주면 한 줄이 통째로 넘쳐 흐르므로 제외. */
+  :lang(ko) {
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+  :lang(ja) {
+    line-break: strict;
+  }
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: var(--color-primary);
+    color: #fff;
+  }
 }

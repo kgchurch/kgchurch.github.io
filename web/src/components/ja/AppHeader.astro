@@ -5,50 +5,42 @@ const koUrl = getRelativeLocaleUrl("ko", "");
 const jaUrl = getRelativeLocaleUrl("ja", "");
 
 const links = [
-    {
-        to: jaUrl + "service-times",
-        label: "礼拝時間",
-    },
-    {
-        to: jaUrl + "location",
-        label: "アクセス",
-    },
+  { to: jaUrl + "service-times", label: "礼拝時間" },
+  { to: jaUrl + "location", label: "アクセス" },
 ];
 ---
 
-<header>
-  <div class="navbar bg-base-100 shadow-sm">
+<header class="sticky top-0 z-50 border-b border-base-300 bg-base-100/85 backdrop-blur-md">
+  <div class="navbar mx-auto min-h-[72px] max-w-7xl px-4 md:px-10">
     <div class="flex-1">
-      <div class="dropdown">
-        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+      <div class="dropdown lg:hidden">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="メニュー">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
         </div>
         <ul
           tabindex="-1"
-          class="menu menu-lg dropdown-content bg-base-100 rounded-box z-1 mt-3 w-80 p-4 shadow text-xl">
-          {
-            links.map((link) => (
-              <li><a href={link.to}>{link.label}</a></li>
-            ))
-          }
+          class="menu dropdown-content z-1 mt-3 w-64 gap-1 rounded-box border border-base-300 bg-base-100 p-3 text-base shadow-lg">
+          {links.map((link) => (
+            <li><a href={link.to}>{link.label}</a></li>
+          ))}
+          <li><a href={koUrl} class="text-base-content/60">한국어</a></li>
         </ul>
       </div>
-      <a href={jaUrl} class="btn btn-ghost text-xl">柏栄光教会</a>
-    </div>
-    <div class="hidden lg:flex">
-      <ul class="menu menu-horizontal px-1">
-        {
-          links.map((link) => (
-            <li><a href={link.to}>{link.label}</a></li>
-          ))
-        }
-      </ul>
-    </div>
-    <div class="flex-none">
-      <a href={koUrl} class="btn btn-ghost btn-circle" aria-label="Japanese">
-        한국어
+
+      <a href={jaUrl} class="flex items-center px-2">
+        <span class="text-lg font-semibold tracking-tight">柏栄光教会</span>
       </a>
     </div>
 
+    <nav class="hidden items-center gap-2 lg:flex">
+      <ul class="menu menu-horizontal gap-1 text-[15px] font-medium">
+        {links.map((link) => (
+          <li><a href={link.to}>{link.label}</a></li>
+        ))}
+      </ul>
+      <a href={koUrl} class="btn btn-outline btn-sm ml-1 rounded-full font-medium">한국어</a>
+    </nav>
   </div>
 </header>

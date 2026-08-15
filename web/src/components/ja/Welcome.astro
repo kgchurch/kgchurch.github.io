@@ -1,134 +1,107 @@
 ---
+import { Image } from 'astro:assets';
 import SermonVideo from '~/components/ja/_SermonVideoJapanese.astro';
+import heroImage from '~/assets/hero-worship.jpg';
+
+const communities = [
+  {
+    n: "01",
+    title: "礼拝共同体",
+    sub: "神の栄光を現す",
+    body: "私たちは、霊と真理による礼拝を通して神様と深く出会い、人生のあらゆる場でその栄光を現すことを願っています。十字架の愛によって互いに仕え、この世の光と塩となる聖なる共同体です。",
+  },
+  {
+    n: "02",
+    title: "教育共同体",
+    sub: "御言葉によって育てる",
+    body: "私たちは、毎日みことばを黙想し、生活に適用することで霊的な成熟を目指しています。体系的な養育と訓練を通して、信徒を成熟したキリスト者として育て、世の中で光と塩の役割を果たすリーダーを育成する教育共同体です。",
+  },
+  {
+    n: "03",
+    title: "宣教共同体",
+    sub: "愛をもって仕える",
+    body: "私たちは、キリストの愛を心に抱き、隣人に仕えるとともに、福音の喜びの知らせを地の果てまで伝える使命に献身しています。地域社会を超えて諸国の民へと歩み出し、神の愛を必要とするすべての場所にいのちの光を照らす宣教共同体です。",
+  },
+];
 ---
-<div class="carousel w-full min-h-[300px] h-auto">
-  <div id="slide1" class="carousel-item relative w-full">
-    <div class="hero bg-primary/20">
-      <div class="hero-content flex-col lg:flex-row">
-        <div class="text-center lg:text-left w-3/4 md:w-2/3 px-4">
-          <h1 class="text-3xl font-bold">神の栄光を現す礼拝共同体</h1>
-          <p class="py-4 md:py-6 text-sm md:text-base">
-            私たちは、霊と真理による礼拝を通して神様と深く出会い、人生のあらゆる場でその栄光を現すことを願っています。 
-            十字架の愛によって互いに仕え、この世の光と塩となる聖なる共同体です。
-          </p>
-        </div>
+
+<!-- Hero -->
+<section class="bg-gradient-to-b from-base-100 to-base-200">
+  <div class="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 md:grid-cols-2 md:gap-16 md:px-10 md:py-24">
+    <div>
+      <p class="mb-5 text-xs font-semibold tracking-[0.18em] text-secondary">韓国基督教監理会 · 柏</p>
+      <h1 class="text-balance text-4xl font-semibold leading-[1.3] tracking-tight md:text-5xl">
+        神の栄光を現す<br />礼拝共同体
+      </h1>
+      <p class="mt-6 max-w-prose text-base leading-relaxed text-base-content/70 md:text-lg">
+        私たちは、霊と真理による礼拝を通して神様と深く出会い、人生のあらゆる場でその栄光を現すことを願っています。十字架の愛によって互いに仕え、この世の光と塩となる聖なる共同体です。
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/ja/service-times" class="btn btn-primary rounded-xl px-7">礼拝のご案内</a>
+        <a href="/ja/location" class="btn btn-outline rounded-xl px-7">アクセス</a>
       </div>
     </div>
-    <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide3">❮</button>
-      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide2">❯</button>
+    <div class="aspect-[4/3.2] overflow-hidden rounded-2xl border border-base-300">
+      <Image
+        src={heroImage}
+        alt="柏栄光教会の礼拝堂で説教する牧師"
+        widths={[480, 800, 1200, 1800]}
+        sizes="(min-width: 768px) 44vw, 100vw"
+        class="h-full w-full object-cover"
+        style="object-position:50% 22%"
+        loading="eager"
+        fetchpriority="high"
+      />
     </div>
   </div>
+</section>
 
-  <div id="slide2" class="carousel-item relative w-full">
-    <div class="hero bg-primary/20">
-      <div class="hero-content flex-col lg:flex-row">
-        <div class="text-center lg:text-left w-3/4 md:w-2/3 px-4">
-          <h1 class="text-3xl font-bold">御言葉によって育てる教育共同体</h1>
-          <p class="py-4 md:py-6 text-sm md:text-base">
-            私たちは、毎日みことばを黙想し、生活に適用することで霊的な成熟を目指しています。
-            体系的な養育と訓練を通して、信徒を成熟したキリスト者として育て、
-            世の中で光と塩の役割を果たすリーダーを育成する教育共同体です。
-          </p>
-        </div>
+<!-- Three communities -->
+<section class="mx-auto max-w-7xl px-5 py-20 md:px-10 md:py-28">
+  <div class="mx-auto mb-12 max-w-xl text-center md:mb-16">
+    <p class="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-secondary">Our Vision</p>
+    <h2 class="text-3xl font-semibold tracking-tight md:text-4xl">ともに建て上げる共同体</h2>
+  </div>
+  <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    {communities.map((c) => (
+      <div class="rounded-2xl border border-base-300 bg-base-100 p-7 transition hover:border-base-content/20 md:p-9">
+        <span class="font-semibold text-secondary">{c.n}</span>
+        <h3 class="mb-1.5 mt-3.5 text-xl font-semibold md:text-2xl">{c.title}</h3>
+        <p class="mb-3.5 text-sm font-semibold text-primary">{c.sub}</p>
+        <p class="text-[15px] leading-relaxed text-base-content/70">{c.body}</p>
       </div>
-    </div>
-    <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide1">❮</button>
-      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide3">❯</button>
-    </div>
+    ))}
   </div>
-
-  <div id="slide3" class="carousel-item relative w-full">
-    <div class="hero bg-primary/20">
-      <div class="hero-content flex-col lg:flex-row">
-        <div class="text-center lg:text-left w-3/4 md:w-2/3 px-4">
-          <h1 class="text-3xl font-bold">愛をもって仕える宣教共同体</h1>
-          <p class="py-4 md:py-6 text-sm md:text-base">
-            私たちは、キリストの愛を心に抱き、隣人に仕えるとともに、福音の喜びの知らせを地の果てまで伝える使命に献身しています。
-            地域社会を超えて諸国の民へと歩み出し、神の愛を必要とするすべての場所にいのちの光を照らす宣教共同体です。
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide2">❮</button>
-      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide1">❯</button>
-    </div>
-  </div>
-</div>
-
-<script>
-  const slides = ['slide1', 'slide2', 'slide3'];
-  let currentIndex = 0;
-
-  // Function to smooth scroll to a slide
-  function scrollToSlide(slideId) {
-    const element = document.getElementById(slideId);
-    if (element) {
-      const container = element.parentElement;
-      if (container) {
-        container.scrollTo({
-          left: element.offsetLeft,
-          behavior: 'smooth'
-        });
-      }
-    }
-  }
-
-  // Auto-slide functionality (currently commented out but logic updated for reference)
-  setInterval(() => {
-    currentIndex = (currentIndex + 1) % slides.length;
-    scrollToSlide(slides[currentIndex]);
-  }, 10000);
-
-
-  // Add click event listeners to navigation buttons
-  document.addEventListener('DOMContentLoaded', () => {
-    const navButtons = document.querySelectorAll('.carousel-nav');
-    navButtons.forEach(button => {
-      button.addEventListener('click', (e) => {
-        const targetId = (e.currentTarget as HTMLElement).dataset.target;
-        if (targetId) {
-          scrollToSlide(targetId);
-          // Optional: Update currentIndex if auto-slide is re-enabled
-          // currentIndex = slides.indexOf(targetId);
-        }
-      });
-    });
-  });
-</script>
-
+</section>
 
 <!-- Sermon -->
-<section class="py-5 bg-base-100">
-  <div class="container mx-auto px-6">
-    <div class="flex flex-col gap-12 max-w-3xl mx-auto text-left">
-      <div class="flex justify-center flex-col items-center gap-4">
-        <SermonVideo />
-        <a href="https://www.youtube.com/@柏栄光教会/videos" target="_blank" class="link link-primary">YouTubeで説教動画をもっと見る</a>
-      </div>
+<section class="bg-primary text-primary-content">
+  <div class="mx-auto grid max-w-7xl items-center gap-10 px-5 py-20 md:grid-cols-2 md:gap-14 md:px-10 md:py-24">
+    <div>
+      <p class="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-primary-content/60">Sunday Message</p>
+      <h2 class="text-3xl font-semibold leading-tight md:text-4xl">御言葉の中で<br />ともに成長する</h2>
+      <p class="mt-5 max-w-prose text-base leading-relaxed text-primary-content/80">
+        毎週宣べ伝えられる神の御言葉を、動画で改めてご覧ください。遠方の方も一緒に礼拝することができます。
+      </p>
+      <a
+        href="https://www.youtube.com/@柏栄光教会/videos"
+        target="_blank"
+        class="btn mt-7 rounded-xl border-0 bg-base-100 text-primary hover:bg-base-200">
+        YouTubeで説教動画をもっと見る
+      </a>
+    </div>
+    <div class="overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10">
+      <SermonVideo />
     </div>
   </div>
 </section>
 
 <!-- Introduction -->
-<section class="py-5 bg-base-100">
-  <div class="container mx-auto px-6">
-    <div class="flex flex-col gap-12 max-w-3xl mx-auto text-left">
-      
-      <div>
-        <h2 class="text-2xl font-bold mb-4 text-primary">柏栄光教会</h2>
-        <p class="text-gray-600 leading-relaxed">
-          柏栄光教会は、韓国基督教監理会に所属する教会であり、
-          善き牧者教会の宣教派遣を受けて、日本の柏地域に設立された教会です。
-          <br />
-          私たちは、イエス・キリストを中心に、み言葉と祈り、礼拝を通して神様を深く知り、
-          ともに成長していく信仰の共同体です。
-          <br />
-          教会が初めての方も、いつでも歓迎いたします。
-      </div>
-    </div>
-  </div>
+<section class="mx-auto max-w-3xl px-5 py-20 text-center md:px-10 md:py-28">
+  <p class="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-secondary">About</p>
+  <h2 class="mb-7 text-3xl font-semibold tracking-tight md:text-4xl">柏栄光教会</h2>
+  <p class="text-base leading-loose text-base-content/75 md:text-lg">
+    柏栄光教会は、韓国基督教監理会に所属する教会であり、善き牧者教会の宣教派遣を受けて、日本の柏地域に設立された教会です。私たちは、イエス・キリストを中心に、み言葉と祈り、礼拝を通して神様を深く知り、ともに成長していく信仰の共同体です。
+  </p>
+  <p class="mt-6 text-base font-semibold text-primary md:text-lg">教会が初めての方も、いつでも歓迎いたします。</p>
 </section>
-

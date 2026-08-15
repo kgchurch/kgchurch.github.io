@@ -1,135 +1,107 @@
 ---
+import { Image } from 'astro:assets';
 import SermonVideo from './_SermonVideoKorean.astro';
+import heroImage from '~/assets/hero-worship.jpg';
+
+const communities = [
+  {
+    n: "01",
+    title: "예배 공동체",
+    sub: "하나님을 영화롭게 하는",
+    body: "우리는 영과 진리로 드리는 예배를 통해 하나님을 깊이 만나고, 삶의 모든 자리에서 그분의 영광을 드러내기를 소망합니다. 십자가 사랑으로 서로를 섬기며 세상에 빛과 소금이 되는 거룩한 공동체입니다.",
+  },
+  {
+    n: "02",
+    title: "교육 공동체",
+    sub: "말씀으로 양육하는",
+    body: "매일 말씀을 묵상하고 삶에 적용하여 영적 성숙을 이루어갑니다. 체계적인 양육과 훈련을 통해 성도들을 온전한 그리스도인으로 세우며, 세상 속에서 빛과 소금의 역할을 감당하는 리더를 길러내는 교육 공동체입니다.",
+  },
+  {
+    n: "03",
+    title: "선교 공동체",
+    sub: "사랑으로 섬기는",
+    body: "그리스도의 사랑을 품고 이웃을 섬기며, 복음의 기쁜 소식을 땅 끝까지 전하는 사명에 헌신합니다. 지역 사회를 넘어 열방을 향해 나아가며, 하나님의 사랑이 필요한 곳마다 생명의 빛을 비추는 선교 공동체입니다.",
+  },
+];
 ---
-<div class="carousel w-full min-h-[300px] h-auto">
-  <div id="slide1" class="carousel-item relative w-full">
-    <div class="hero bg-primary/20">
-      <div class="hero-content flex-col lg:flex-row">
-        <div class="text-center lg:text-left w-3/4 md:w-2/3 px-4">
-          <h1 class="text-3xl font-bold">하나님을 영화롭게 하는 예배 공동체</h1>
-          <p class="py-4 md:py-6 text-sm md:text-base">
-            우리는 영과 진리로 드리는 예배를 통해 하나님을 깊이 만나고, 삶의 모든 자리에서 그분의 영광을 드러내기를 소망합니다.
-            십자가 사랑으로 서로를 섬기며 세상에 빛과 소금이 되는 거룩한 공동체입니다.
-          </p>
-        </div>
+
+<!-- Hero -->
+<section class="bg-gradient-to-b from-base-100 to-base-200">
+  <div class="mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 md:grid-cols-2 md:gap-16 md:px-10 md:py-24">
+    <div>
+      <p class="mb-5 text-xs font-semibold tracking-[0.18em] text-secondary">기독교대한감리회 · 카시와</p>
+      <h1 class="text-balance text-4xl font-semibold leading-[1.28] tracking-tight md:text-5xl">
+        하나님을 영화롭게<br />하는 예배 공동체
+      </h1>
+      <p class="mt-6 max-w-prose text-base leading-relaxed text-base-content/70 md:text-lg">
+        우리는 영과 진리로 드리는 예배를 통해 하나님을 깊이 만나고, 삶의 모든 자리에서 그분의 영광을 드러내기를 소망합니다. 십자가 사랑으로 서로를 섬기며 세상에 빛과 소금이 되는 거룩한 공동체입니다.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/service-times" class="btn btn-primary rounded-xl px-7">예배 안내</a>
+        <a href="/location" class="btn btn-outline rounded-xl px-7">오시는 길</a>
       </div>
     </div>
-    <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide3">❮</button>
-      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide2">❯</button>
+    <div class="aspect-[4/3.2] overflow-hidden rounded-2xl border border-base-300">
+      <Image
+        src={heroImage}
+        alt="카시와영광교회 예배당에서 설교하는 목사님"
+        widths={[480, 800, 1200, 1800]}
+        sizes="(min-width: 768px) 44vw, 100vw"
+        class="h-full w-full object-cover"
+        style="object-position:50% 22%"
+        loading="eager"
+        fetchpriority="high"
+      />
     </div>
   </div>
+</section>
 
-  <div id="slide2" class="carousel-item relative w-full">
-    <div class="hero bg-primary/20">
-      <div class="hero-content flex-col lg:flex-row">
-        <div class="text-center lg:text-left w-3/4 md:w-2/3 px-4">
-          <h1 class="text-3xl font-bold">말씀으로 양육하는 교육 공동체</h1>
-          <p class="py-4 md:py-6 text-sm md:text-base">
-            매일 말씀을 묵상하고 삶에 적용하여 영적 성숙을 이루어갑니다.
-            체계적인 양육과 훈련을 통해 성도들을 온전한 그리스도인으로 세우며,
-            세상 속에서 빛과 소금의 역할을 감당하는 리더를 길러내는 교육 공동체입니다.
-          </p>
-        </div>
+<!-- Three communities -->
+<section class="mx-auto max-w-7xl px-5 py-20 md:px-10 md:py-28">
+  <div class="mx-auto mb-12 max-w-xl text-center md:mb-16">
+    <p class="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-secondary">Our Vision</p>
+    <h2 class="text-3xl font-semibold tracking-tight md:text-4xl">우리가 함께 세워가는 공동체</h2>
+  </div>
+  <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    {communities.map((c) => (
+      <div class="rounded-2xl border border-base-300 bg-base-100 p-7 transition hover:border-base-content/20 md:p-9">
+        <span class="font-semibold text-secondary">{c.n}</span>
+        <h3 class="mb-1.5 mt-3.5 text-xl font-semibold md:text-2xl">{c.title}</h3>
+        <p class="mb-3.5 text-sm font-semibold text-primary">{c.sub}</p>
+        <p class="text-[15px] leading-relaxed text-base-content/70">{c.body}</p>
       </div>
-    </div>
-    <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide1">❮</button>
-      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide3">❯</button>
-    </div>
+    ))}
   </div>
-
-  <div id="slide3" class="carousel-item relative w-full">
-    <div class="hero bg-primary/20">
-      <div class="hero-content flex-col lg:flex-row">
-        <div class="text-center lg:text-left w-3/4 md:w-2/3 px-4">
-          <h1 class="text-3xl font-bold">사랑으로 섬기는 선교 공동체</h1>
-          <p class="py-4 md:py-6 text-sm md:text-base">
-            그리스도의 사랑을 품고 이웃을 섬기며, 복음의 기쁜 소식을 땅 끝까지 전하는 사명에 헌신합니다.
-            지역 사회를 넘어 열방을 향해 나아가며, 하나님의 사랑이 필요한 곳마다 생명의 빛을 비추는 선교 공동체입니다.
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide2">❮</button>
-      <button class="btn btn-circle btn-primary carousel-nav" data-target="slide1">❯</button>
-    </div>
-  </div>
-</div>
-
-<script>
-  const slides = ['slide1', 'slide2', 'slide3'];
-  let currentIndex = 0;
-
-  // Function to smooth scroll to a slide
-  function scrollToSlide(slideId) {
-    const element = document.getElementById(slideId);
-    if (element) {
-      const container = element.parentElement;
-      if (container) {
-        container.scrollTo({
-          left: element.offsetLeft,
-          behavior: 'smooth'
-        });
-      }
-    }
-  }
-
-  // Auto-slide functionality (currently commented out but logic updated for reference)
-  setInterval(() => {
-    currentIndex = (currentIndex + 1) % slides.length;
-    scrollToSlide(slides[currentIndex]);
-  }, 10000);
-
-
-  // Add click event listeners to navigation buttons
-  document.addEventListener('DOMContentLoaded', () => {
-    const navButtons = document.querySelectorAll('.carousel-nav');
-    navButtons.forEach(button => {
-      button.addEventListener('click', (e) => {
-        const targetId = (e.currentTarget as HTMLElement).dataset.target;
-        if (targetId) {
-          scrollToSlide(targetId);
-          // Optional: Update currentIndex if auto-slide is re-enabled
-          // currentIndex = slides.indexOf(targetId);
-        }
-      });
-    });
-  });
-</script>
-
+</section>
 
 <!-- Sermon -->
-<section class="py-5 bg-base-100">
-  <div class="container mx-auto px-6">
-    <div class="flex flex-col gap-12 max-w-3xl mx-auto text-left">
-      <div class="flex justify-center flex-col items-center gap-4">
-        <SermonVideo />
-        <a href="https://www.youtube.com/@柏栄光教会/videos" target="_blank" class="link link-primary">유튜브에서 설교 영상 더 보기</a>
-      </div>
+<section class="bg-primary text-primary-content">
+  <div class="mx-auto grid max-w-7xl items-center gap-10 px-5 py-20 md:grid-cols-2 md:gap-14 md:px-10 md:py-24">
+    <div>
+      <p class="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-primary-content/60">Sunday Message</p>
+      <h2 class="text-3xl font-semibold leading-tight md:text-4xl">말씀 안에서<br />함께 자라갑니다</h2>
+      <p class="mt-5 max-w-prose text-base leading-relaxed text-primary-content/80">
+        매주 선포되는 하나님의 말씀을 영상으로 다시 만나보세요. 멀리 계신 분들도 함께 예배할 수 있습니다.
+      </p>
+      <a
+        href="https://www.youtube.com/@柏栄光教会/videos"
+        target="_blank"
+        class="btn mt-7 rounded-xl border-0 bg-base-100 text-primary hover:bg-base-200">
+        유튜브에서 설교 영상 더 보기
+      </a>
+    </div>
+    <div class="overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10">
+      <SermonVideo />
     </div>
   </div>
 </section>
 
 <!-- Introduction -->
-<section class="py-5 bg-base-100">
-  <div class="container mx-auto px-6">
-    <div class="flex flex-col gap-12 max-w-3xl mx-auto text-left">
-      
-      <div>
-        <h2 class="text-2xl font-bold mb-4 text-primary">카시와영광교회</h2>
-        <p class="text-gray-600 leading-relaxed">
-          카시와영광교회는 기독교대한감리회 소속 교회로,
-          선한목자교회의 파송을 받아 일본 카시와 지역에 세워진 교회입니다.
-          <br />
-          우리는 예수 그리스도를 중심으로 말씀과 기도, 예배를 통해 하나님을 알아가며
-          함께 성장하는 믿음의 공동체입니다.
-          <br />
-          교회가 처음이신 분들 언제나 환영합니다.
-        </p>
-      </div>
-    </div>
-  </div>
+<section class="mx-auto max-w-3xl px-5 py-20 text-center md:px-10 md:py-28">
+  <p class="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-secondary">About</p>
+  <h2 class="mb-7 text-3xl font-semibold tracking-tight md:text-4xl">카시와영광교회</h2>
+  <p class="text-base leading-loose text-base-content/75 md:text-lg">
+    카시와영광교회는 기독교대한감리회 소속 교회로, 선한목자교회의 파송을 받아 일본 카시와 지역에 세워진 교회입니다. 우리는 예수 그리스도를 중심으로 말씀과 기도, 예배를 통해 하나님을 알아가며 함께 성장하는 믿음의 공동체입니다.
+  </p>
+  <p class="mt-6 text-base font-semibold text-primary md:text-lg">교회가 처음이신 분들 언제나 환영합니다.</p>
 </section>
-

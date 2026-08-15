@@ -1,0 +1,117 @@
+---
+import type { ImageMetadata } from 'astro';
+import { Image, getImage } from 'astro:assets';
+
+interface Props {
+	alt: string;
+	closeLabel: string;
+	prevLabel: string;
+	nextLabel: string;
+}
+
+const { alt, closeLabel, prevLabel, nextLabel } = Astro.props;
+
+// gallery/ 에 파일을 넣거나 빼면 그대로 반영된다 — 이 파일은 고칠 필요 없음.
+// 세로/가로 회전은 Astro 가 EXIF 를 읽어 알아서 바로잡는다.
+const modules = import.meta.glob<{ default: ImageMetadata }>(
+	'../assets/gallery/*.{jpg,jpeg,png,webp,avif,JPG,JPEG,PNG}',
+	{ eager: true },
+);
+const photos = Object.values(modules).map((m) => m.default);
+
+// 빌드할 때마다 최대 9장을 새로 뽑는다 (Fisher-Yates)
+const pool = [...photos];
+for (let i = pool.length - 1; i > 0; i--) {
+	const j = Math.floor(Math.random() * (i + 1));
+	[pool[i], pool[j]] = [pool[j], pool[i]];
+}
+const picked = pool.slice(0, 9);
+
+// 라이트박스에 띄울 큰 이미지
+const enlarged = await Promise.all(
+	picked.map((photo) => getImage({ src: photo, width: 1200, format: 'webp' })),
+);
+---
+
+<div class="grid grid-cols-3 gap-2 md:gap-3">
+	{picked.map((photo, i) => (
+		<button
+			type="button"
+			class="group aspect-square cursor-zoom-in overflow-hidden rounded-lg border border-base-300 md:rounded-xl"
+			data-photo
+			data-full={enlarged[i].src}
+			data-alt={`${alt} ${i + 1}`}
+		>
+			<Image
+				src={photo}
+				alt={`${alt} ${i + 1}`}
+				widths={[240, 480]}
+				sizes="(min-width: 768px) 15vw, 30vw"
+				class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+				loading="eager"
+			/>
+		</button>
+	))}
+</div>
+
+<dialog id="photo-lightbox" class="modal">
+	<div class="modal-box flex max-w-5xl items-center justify-center bg-transparent p-0 shadow-none">
+		<div class="relative">
+			<img id="photo-lightbox-img" src="" alt="" class="max-h-[85vh] w-auto rounded-xl" />
+			<button
+				type="button"
+				id="photo-lightbox-prev"
+				aria-label={prevLabel}
+				class="btn btn-circle btn-sm absolute left-2 top-1/2 -translate-y-1/2 border-0 bg-base-100/80 text-base-content hover:bg-base-100 md:btn-md md:left-3"
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+			</button>
+			<button
+				type="button"
+				id="photo-lightbox-next"
+				aria-label={nextLabel}
+				class="btn btn-circle btn-sm absolute right-2 top-1/2 -translate-y-1/2 border-0 bg-base-100/80 text-base-content hover:bg-base-100 md:btn-md md:right-3"
+			>
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+			</button>
+		</div>
+	</div>
+	<form method="dialog" class="modal-backdrop">
+		<button aria-label={closeLabel}>{closeLabel}</button>
+	</form>
+</dialog>
+
+<script>
+	const lightbox = document.getElementById('photo-lightbox') as HTMLDialogElement | null;
+	const target = document.getElementById('photo-lightbox-img') as HTMLImageElement | null;
+	const prev = document.getElementById('photo-lightbox-prev');
+	const next = document.getElementById('photo-lightbox-next');
+	const triggers = [...document.querySelectorAll<HTMLElement>('[data-photo]')];
+
+	if (lightbox && target && triggers.length) {
+		let current = 0;
+
+		const show = (index: number) => {
+			current = (index + triggers.length) % triggers.length;
+			target.src = triggers[current].dataset.full ?? '';
+			target.alt = triggers[current].dataset.alt ?? '';
+		};
+
+		triggers.forEach((trigger, i) => {
+			trigger.addEventListener('click', () => {
+				show(i);
+				lightbox.showModal();
+			});
+		});
+
+		prev?.addEventListener('click', () => show(current - 1));
+		next?.addEventListener('click', () => show(current + 1));
+
+		// dialog 안으로 포커스가 들어가지 않는 경우가 있어 document 에 건다
+		document.addEventListener('keydown', (event) => {
+			if (!lightbox.open) return;
+			if (event.key === 'ArrowLeft') show(current - 1);
+			if (event.key === 'ArrowRight') show(current + 1);
+		});
+	}
+</script>

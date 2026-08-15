@@ -1,7 +1,6 @@
 ---
-import { Image } from 'astro:assets';
 import SermonVideo from './_SermonVideoKorean.astro';
-import heroImage from '~/assets/hero-worship.jpg';
+import PhotoGrid from '~/components/PhotoGrid.astro';
 
 const communities = [
   {
@@ -41,18 +40,7 @@ const communities = [
         <a href="/location" class="btn btn-outline rounded-xl px-7">오시는 길</a>
       </div>
     </div>
-    <div class="aspect-[4/3.2] overflow-hidden rounded-2xl border border-base-300">
-      <Image
-        src={heroImage}
-        alt="카시와영광교회 예배당에서 설교하는 목사님"
-        widths={[480, 800, 1200, 1800]}
-        sizes="(min-width: 768px) 44vw, 100vw"
-        class="h-full w-full object-cover"
-        style="object-position:50% 22%"
-        loading="eager"
-        fetchpriority="high"
-      />
-    </div>
+    <PhotoGrid alt="카시와영광교회 공동체 사진" closeLabel="닫기" prevLabel="이전 사진" nextLabel="다음 사진" />
   </div>
 </section>
 

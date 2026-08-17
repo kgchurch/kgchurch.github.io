@@ -50,14 +50,14 @@ jobs:
               "ko": ("KO_URL", "web/src/components/ko/_SermonVideoKorean.astro"),
               "ja": ("JA_URL", "web/src/components/ja/_SermonVideoJapanese.astro"),
           }
-          SRC_PATTERN = re.compile(r'(src=")https://www\.youtube\.com/embed/[^"]*(")')
+          SRC_PATTERN = re.compile(r'src="(https://www\.youtube\.com/embed/[^"]*)"')
           VIDEO_ID = re.compile(r'^[A-Za-z0-9_-]{11}$')
 
           def to_embed_url(raw):
-              """다양한 형태의 YouTube 링크를 embed URL 로 정규화한다."""
+              """다양한 형태의 YouTube 링크를 (video_id, embed URL) 로 정규화한다."""
               url = raw.strip()
               if VIDEO_ID.match(url):
-                  return f"https://www.youtube.com/embed/{url}"
+                  return url, f"https://www.youtube.com/embed/{url}"
 
               if not url.startswith(("http://", "https://")):
                   url = "https://" + url
@@ -84,9 +84,10 @@ jobs:
               si = query.get("si", [""])[0]
               if si:
                   embed += f"?si={si}"
-              return embed
+              return video_id, embed
 
           changed = []
+          skipped = []
           errors = []
 
           for lang, (env_key, rel_path) in TARGETS.items():
@@ -95,22 +96,31 @@ jobs:
                   continue
 
               try:
-                  embed = to_embed_url(raw)
+                  video_id, embed = to_embed_url(raw)
               except ValueError as exc:
                   errors.append(str(exc))
                   continue
 
               path = pathlib.Path(rel_path)
               original = path.read_text(encoding="utf-8")
-              updated, count = SRC_PATTERN.subn(rf'\g<1>{embed}\g<2>', original, count=1)
-              if count == 0:
+              match = SRC_PATTERN.search(original)
+              if not match:
                   errors.append(f"{rel_path} 에서 embed src 를 찾지 못했습니다.")
                   continue
 
-              if updated == original:
-                  print(f"::notice::{rel_path} 는 이미 {embed} 입니다. 건너뜁니다.")
+              # si 는 공유할 때마다 새로 발급되는 추적 파라미터라 video id 로만 비교한다.
+              current = match.group(1)
+              try:
+                  current_id, _ = to_embed_url(current)
+              except ValueError:
+                  current_id = None
+
+              if current_id == video_id:
+                  skipped.append(f"{lang}:{current}")
+                  print(f"::notice::{rel_path} 는 이미 같은 영상({video_id})입니다. 건너뜁니다.")
                   continue
 
+              updated = original[:match.start(1)] + embed + original[match.end(1):]
               path.write_text(updated, encoding="utf-8")
               changed.append(f"{lang}:{embed}")
               print(f"::notice::{rel_path} -> {embed}")
@@ -122,6 +132,7 @@ jobs:
 
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
               out.write(f"changed={' '.join(changed)}\n")
+              out.write(f"skipped={' '.join(skipped)}\n")
               out.write(f"has_changes={'true' if changed else 'false'}\n")
           PY
 
@@ -157,4 +168,32 @@ jobs:
 
       - name: Report no-op
         if: steps.replace.outputs.has_changes != 'true'
-        run: echo "::warning::변경된 영상 링크가 없어 PR 을 만들지 않았습니다."
+        env:
+          SKIPPED: ${{ steps.replace.outputs.skipped }}
+        run: |
+          {
+            echo "## 변경 사항이 없어 PR 을 만들지 않았습니다"
+            echo ""
+            echo "| 언어 | 사유 | 현재 Embed URL |"
+            echo "| --- | --- | --- |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          REASONS=""
+          for entry in $SKIPPED; do
+            lang="${entry%%:*}"
+            url="${entry#*:}"
+            case "$lang" in
+              ko) label="한국어" ;;
+              ja) label="일본어" ;;
+              *)  label="$lang" ;;
+            esac
+            echo "| ${label} | 입력한 URL 이 현재 설정된 URL 과 동일합니다 | ${url} |" >> "$GITHUB_STEP_SUMMARY"
+            REASONS="${REASONS}${REASONS:+, }${label}: 입력한 URL 이 현재 설정된 URL 과 동일합니다 (${url})"
+          done
+
+          {
+            echo ""
+            echo "새로 올라온 영상의 링크를 입력했는지 확인해 주세요."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          echo "::warning::PR 을 만들지 않았습니다 — ${REASONS:-변경된 영상 링크가 없습니다}"

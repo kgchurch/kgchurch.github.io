@@ -143,7 +143,8 @@ jobs:
           CHANGED: ${{ steps.replace.outputs.changed }}
         run: |
           DATE=$(TZ=Asia/Seoul date +'%Y.%m.%d')
-          BRANCH="chore/sermon-video-${DATE//./}-${GITHUB_RUN_ID}"
+          # GITHUB_RUN_ID 는 re-run 해도 그대로라 attempt 까지 붙여야 브랜치가 겹치지 않는다.
+          BRANCH="chore/sermon-video-${DATE//./}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           TITLE="chore: update worship service video - ${DATE}"
 
           BODY="## TL;DR"$'\n'"예배 설교 영상 링크를 업데이트합니다."$'\n\n'"| 언어 | Embed URL |"$'\n'"| --- | --- |"

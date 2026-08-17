@@ -161,11 +161,39 @@ jobs:
           git commit -m "$TITLE"
           git push origin "$BRANCH"
 
-          gh pr create \
+          # gh pr create 는 성공 시 생성된 PR URL 을 stdout 으로 출력한다.
+          PR_URL=$(gh pr create \
             --base "${GITHUB_REF_NAME}" \
             --head "$BRANCH" \
             --title "$TITLE" \
-            --body "$BODY"
+            --body "$BODY")
+
+          {
+            echo "## 설교 영상 업데이트 PR 을 만들었습니다"
+            echo ""
+            echo "### $PR_URL"
+            echo ""
+            echo "| 언어 | Embed URL |"
+            echo "| --- | --- |"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          for entry in $CHANGED; do
+            lang="${entry%%:*}"
+            url="${entry#*:}"
+            case "$lang" in
+              ko) label="한국어" ;;
+              ja) label="일본어" ;;
+              *)  label="$lang" ;;
+            esac
+            echo "| ${label} | ${url} |" >> "$GITHUB_STEP_SUMMARY"
+          done
+
+          {
+            echo ""
+            echo "브랜치: \`${BRANCH}\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          echo "::notice::PR 생성 완료 — ${PR_URL}"
 
       - name: Report no-op
         if: steps.replace.outputs.has_changes != 'true'

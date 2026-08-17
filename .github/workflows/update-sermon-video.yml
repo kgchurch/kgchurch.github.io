@@ -1,0 +1,160 @@
+name: Update Sermon Video
+
+on:
+  workflow_dispatch:
+    inputs:
+      ko_url:
+        description: '한국어 예배 영상 YouTube URL (watch / youtu.be / live / embed 형식 모두 가능)'
+        required: false
+        type: string
+      ja_url:
+        description: '일본어 예배 영상 YouTube URL (watch / youtu.be / live / embed 형식 모두 가능)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate inputs
+        env:
+          KO_URL: ${{ inputs.ko_url }}
+          JA_URL: ${{ inputs.ja_url }}
+        run: |
+          if [ -z "${KO_URL// }" ] && [ -z "${JA_URL// }" ]; then
+            echo "::error::ko_url 과 ja_url 중 최소 하나는 입력해야 합니다."
+            exit 1
+          fi
+
+      - name: Replace embed URLs
+        id: replace
+        env:
+          KO_URL: ${{ inputs.ko_url }}
+          JA_URL: ${{ inputs.ja_url }}
+        run: |
+          python3 - <<'PY'
+          import os
+          import pathlib
+          import re
+          import sys
+          from urllib.parse import parse_qs, urlparse
+
+          TARGETS = {
+              "ko": ("KO_URL", "web/src/components/ko/_SermonVideoKorean.astro"),
+              "ja": ("JA_URL", "web/src/components/ja/_SermonVideoJapanese.astro"),
+          }
+          SRC_PATTERN = re.compile(r'(src=")https://www\.youtube\.com/embed/[^"]*(")')
+          VIDEO_ID = re.compile(r'^[A-Za-z0-9_-]{11}$')
+
+          def to_embed_url(raw):
+              """다양한 형태의 YouTube 링크를 embed URL 로 정규화한다."""
+              url = raw.strip()
+              if VIDEO_ID.match(url):
+                  return f"https://www.youtube.com/embed/{url}"
+
+              if not url.startswith(("http://", "https://")):
+                  url = "https://" + url
+
+              parsed = urlparse(url)
+              host = parsed.netloc.lower().removeprefix("www.")
+              path = parsed.path.strip("/").split("/")
+              query = parse_qs(parsed.query)
+
+              if host in ("youtu.be",):
+                  video_id = path[0] if path and path[0] else ""
+              elif host in ("youtube.com", "m.youtube.com", "youtube-nocookie.com"):
+                  if path and path[0] in ("embed", "live", "shorts", "v") and len(path) > 1:
+                      video_id = path[1]
+                  else:
+                      video_id = query.get("v", [""])[0]
+              else:
+                  raise ValueError(f"YouTube URL 이 아닙니다: {raw}")
+
+              if not VIDEO_ID.match(video_id):
+                  raise ValueError(f"video id 를 추출하지 못했습니다: {raw}")
+
+              embed = f"https://www.youtube.com/embed/{video_id}"
+              si = query.get("si", [""])[0]
+              if si:
+                  embed += f"?si={si}"
+              return embed
+
+          changed = []
+          errors = []
+
+          for lang, (env_key, rel_path) in TARGETS.items():
+              raw = os.environ.get(env_key, "").strip()
+              if not raw:
+                  continue
+
+              try:
+                  embed = to_embed_url(raw)
+              except ValueError as exc:
+                  errors.append(str(exc))
+                  continue
+
+              path = pathlib.Path(rel_path)
+              original = path.read_text(encoding="utf-8")
+              updated, count = SRC_PATTERN.subn(rf'\g<1>{embed}\g<2>', original, count=1)
+              if count == 0:
+                  errors.append(f"{rel_path} 에서 embed src 를 찾지 못했습니다.")
+                  continue
+
+              if updated == original:
+                  print(f"::notice::{rel_path} 는 이미 {embed} 입니다. 건너뜁니다.")
+                  continue
+
+              path.write_text(updated, encoding="utf-8")
+              changed.append(f"{lang}:{embed}")
+              print(f"::notice::{rel_path} -> {embed}")
+
+          if errors:
+              for message in errors:
+                  print(f"::error::{message}")
+              sys.exit(1)
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as out:
+              out.write(f"changed={' '.join(changed)}\n")
+              out.write(f"has_changes={'true' if changed else 'false'}\n")
+          PY
+
+      - name: Create pull request
+        if: steps.replace.outputs.has_changes == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          CHANGED: ${{ steps.replace.outputs.changed }}
+        run: |
+          DATE=$(TZ=Asia/Seoul date +'%Y.%m.%d')
+          BRANCH="chore/sermon-video-${DATE//./}-${GITHUB_RUN_ID}"
+          TITLE="chore: update worship service video - ${DATE}"
+
+          BODY="## TL;DR"$'\n'"예배 설교 영상 링크를 업데이트합니다."$'\n\n'"| 언어 | Embed URL |"$'\n'"| --- | --- |"
+          for entry in $CHANGED; do
+            lang="${entry%%:*}"
+            url="${entry#*:}"
+            BODY="${BODY}"$'\n'"| ${lang} | ${url} |"
+          done
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add web/src/components
+          git commit -m "$TITLE"
+          git push origin "$BRANCH"
+
+          gh pr create \
+            --base "${GITHUB_REF_NAME}" \
+            --head "$BRANCH" \
+            --title "$TITLE" \
+            --body "$BODY"
+
+      - name: Report no-op
+        if: steps.replace.outputs.has_changes != 'true'
+        run: echo "::warning::변경된 영상 링크가 없어 PR 을 만들지 않았습니다."

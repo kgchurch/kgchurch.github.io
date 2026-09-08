@@ -14,7 +14,9 @@ on:
 
 permissions:
   contents: write
-  pull-requests: write
+  # GITHUB_TOKEN 으로 만든 push 는 push 이벤트를 발생시키지 않아 deploy 워크플로우가
+  # 자동으로 돌지 않는다. 그래서 배포를 직접 dispatch 하기 위해 actions: write 가 필요하다.
+  actions: write
 
 jobs:
   update:
@@ -136,42 +138,29 @@ jobs:
               out.write(f"has_changes={'true' if changed else 'false'}\n")
           PY
 
-      - name: Create pull request
+      - name: Commit and deploy
         if: steps.replace.outputs.has_changes == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           CHANGED: ${{ steps.replace.outputs.changed }}
         run: |
           DATE=$(TZ=Asia/Seoul date +'%Y.%m.%d')
-          # GITHUB_RUN_ID 는 re-run 해도 그대로라 attempt 까지 붙여야 브랜치가 겹치지 않는다.
-          BRANCH="chore/sermon-video-${DATE//./}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
           TITLE="chore: update worship service video - ${DATE}"
-
-          BODY="## TL;DR"$'\n'"예배 설교 영상 링크를 업데이트합니다."$'\n\n'"| 언어 | Embed URL |"$'\n'"| --- | --- |"
-          for entry in $CHANGED; do
-            lang="${entry%%:*}"
-            url="${entry#*:}"
-            BODY="${BODY}"$'\n'"| ${lang} | ${url} |"
-          done
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git checkout -b "$BRANCH"
           git add web/src/components
           git commit -m "$TITLE"
-          git push origin "$BRANCH"
+          # actions/checkout 은 detached HEAD 로 체크아웃하므로 HEAD: 형태로 푸시한다.
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+          SHA=$(git rev-parse HEAD)
 
-          # gh pr create 는 성공 시 생성된 PR URL 을 stdout 으로 출력한다.
-          PR_URL=$(gh pr create \
-            --base "${GITHUB_REF_NAME}" \
-            --head "$BRANCH" \
-            --title "$TITLE" \
-            --body "$BODY")
+          # GITHUB_TOKEN 으로 만든 push 는 push 이벤트를 발생시키지 않는다.
+          # 그래서 배포 워크플로우를 직접 실행해 준다.
+          gh workflow run deploy.yml --ref "${GITHUB_REF_NAME}"
 
           {
-            echo "## 설교 영상 업데이트 PR 을 만들었습니다"
-            echo ""
-            echo "### $PR_URL"
+            echo "## 설교 영상을 반영하고 배포를 시작했습니다"
             echo ""
             echo "| 언어 | Embed URL |"
             echo "| --- | --- |"
@@ -190,10 +179,12 @@ jobs:
 
           {
             echo ""
-            echo "브랜치: \`${BRANCH}\`"
+            echo "커밋: [\`${SHA:0:7}\`](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${SHA}) (\`${GITHUB_REF_NAME}\`)"
+            echo ""
+            echo "배포 진행 상황은 [Deploy to GitHub Pages](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/workflows/deploy.yml) 에서 확인할 수 있습니다."
           } >> "$GITHUB_STEP_SUMMARY"
 
-          echo "::notice::PR 생성 완료 — ${PR_URL}"
+          echo "::notice::${GITHUB_REF_NAME} 에 커밋 완료 (${SHA:0:7}) — 배포를 시작했습니다."
 
       - name: Report no-op
         if: steps.replace.outputs.has_changes != 'true'
@@ -201,7 +192,7 @@ jobs:
           SKIPPED: ${{ steps.replace.outputs.skipped }}
         run: |
           {
-            echo "## 변경 사항이 없어 PR 을 만들지 않았습니다"
+            echo "## 변경 사항이 없어 아무것도 반영하지 않았습니다"
             echo ""
             echo "| 언어 | 사유 | 현재 Embed URL |"
             echo "| --- | --- | --- |"
@@ -225,4 +216,4 @@ jobs:
             echo "새로 올라온 영상의 링크를 입력했는지 확인해 주세요."
           } >> "$GITHUB_STEP_SUMMARY"
 
-          echo "::warning::PR 을 만들지 않았습니다 — ${REASONS:-변경된 영상 링크가 없습니다}"
+          echo "::warning::반영한 변경 사항이 없습니다 — ${REASONS:-변경된 영상 링크가 없습니다}"

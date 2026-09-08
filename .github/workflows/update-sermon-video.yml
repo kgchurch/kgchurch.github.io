@@ -144,7 +144,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           CHANGED: ${{ steps.replace.outputs.changed }}
         run: |
-          DATE=$(TZ=Asia/Seoul date +'%Y.%m.%d')
+          DATE=$(TZ=Asia/Tokyo date +'%Y.%m.%d')
           TITLE="chore: update worship service video - ${DATE}"
 
           git config user.name "github-actions[bot]"
